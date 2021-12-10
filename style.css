@@ -122,7 +122,7 @@ ul li {
 
 @media screen and (min-width: 768px){
   .item_list{
-    width: 800px;
+    width: 700px;
     margin: auto;
   }
 }
