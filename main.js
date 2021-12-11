@@ -11,14 +11,14 @@ $(".input_section").keyup(function(event) {
 });
 
 function timeStamp() {
-  let now = new Date();
-  let year = now.getFullYear();
-  let month = now.getMonth();
-  let date = now.getDate();
+  var now = new Date();
+  var year = now.getFullYear();
+  var month = now.getMonth();
+  var date = now.getDate();
   const WEEKDAY = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-  let day = WEEKDAY[now.getDay()];
-  let hours = now.getHours();
-  let minutes = ("0"+now.getMinutes()).slice(-2);
+  var day = WEEKDAY[now.getDay()];
+  var hours = now.getHours();
+  var minutes = ("0"+now.getMinutes()).slice(-2);
 
   return year + '.' + (month+1) + '.' + date + '<br>' + '(' + day + ') ' + hours + ':' + minutes;
 }
@@ -33,9 +33,10 @@ function addItem() {
         return false;
       }
         itemList.push(item);
-        storage.setItem(itemList.length, item);
+        storage.setItem((itemList.length)-1, item);
         document.querySelector(".item").value = "";
         document.querySelector(".item").focus();
+        showList();
     }
 }
 
