@@ -1,6 +1,7 @@
-let storage = localStorage;
+// let storage = localStorage;
 
 let itemList = [];
+let timeList = [];
 let inputButton = document.querySelector(".input_button");
 inputButton.addEventListener("click", addItem);
 
@@ -23,8 +24,6 @@ function timeStamp() {
   return year + '.' + (month+1) + '.' + date + '<br>' + '(' + day + ') ' + hours + ':' + minutes;
 }
 
-
-
 function addItem() {
     let item = document.querySelector(".item").value;
     if (item != null) {
@@ -33,7 +32,7 @@ function addItem() {
         return false;
       }
         itemList.push(item);
-        storage.setItem((itemList.length)-1, item);
+        // storage.setItem((itemList.length)-1, item);
         document.querySelector(".item").value = "";
         document.querySelector(".item").focus();
         showList();
@@ -42,9 +41,10 @@ function addItem() {
 
 function showList() {
     var timestamp = timeStamp();
+    timeList.push(timestamp);
     let list = "<ul>"
     for (let i = 0; i <itemList.length; i++) {
-        list += "<li>" + itemList[i] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + timestamp + "</div></li>";
+        list += "<li>" + itemList[i] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + timeList[i] + "</div></li>";
     }
     list += "</ul>";
     document.querySelector(".item_list").innerHTML = list;
@@ -58,16 +58,17 @@ function showList() {
 
 function deleteItem() {
     let id = this.getAttribute("id");
-    storage.removeItem(id);
+    // storage.removeItem(id);
     itemList.splice(id, 1);
+    timeList.splice(id, 1);
     showList();
 }
 
-window.onload = function() {
-  for(let i = 0, len = storage.length; i < len; i++){
-    let k = storage.key(i);
-    let v = storage[k];
-    itemList.push(v);
-  }
-  showList();
-}
+// window.onload = function() {
+//   for(let i = 0, len = storage.length; i < len; i++){
+//     let k = storage.key(i);
+//     let v = storage[k];
+//     itemList.push(v);
+//   }
+//   showList();
+// }
