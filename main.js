@@ -58,9 +58,9 @@ function showList() {
 
 function deleteItem() {
     let id = this.getAttribute("id");
-    myStorage.removeItem(id);
     itemList.splice(id, 1);
     timeList.splice(id, 1);
+    myStorage.removeItem(id);
     showList();
 }
 
