@@ -8,25 +8,37 @@ $(".input_section").keyup(function(event) {
     }
 });
 
+var now = new Date();
+var year = now.getFullYear();
+var month = now.getMonth();
+var date = now.getDate();
+const WEEKDAY = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+var day = WEEKDAY[now.getDay()];
+var hours = now.getHours();
+var minutes = now.getMinutes();
+
+
+
+var timestamp = year + '.' + (month+1) + '.' + date + '<br>' + '(' + day + ') ' + hours + ':' + minutes;
+
 function addItem() {
     let item = document.querySelector(".item").value;
     if (item != null) {
-        if (item == ''){
-          alert('내용을 입력해주세요.\nInvalid input, try again.');
-          return false;
-        }
+      if (item == ''){
+        alert('내용을 입력해주세요.\nInvalid input, try again.');
+        return false;
+      }
         itemList.push(item);
         document.querySelector(".item").value = "";
         document.querySelector(".item").focus();
+        showList();
     }
-
-    showList();
 }
 
 function showList() {
     let list = "<ul>"
     for (let i = 0; i <itemList.length; i++) {
-        list += "<li>" + itemList[i] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span></li>";
+        list += "<li>" + itemList[i] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + timestamp + "</div></li>";
     }
     list += "</ul>";
     document.querySelector(".item_list").innerHTML = list;
