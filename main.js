@@ -1,3 +1,5 @@
+let storage = localStorage;
+
 let itemList = [];
 let inputButton = document.querySelector(".input_button");
 inputButton.addEventListener("click", addItem);
@@ -8,18 +10,20 @@ $(".input_section").keyup(function(event) {
     }
 });
 
-var now = new Date();
-var year = now.getFullYear();
-var month = now.getMonth();
-var date = now.getDate();
-const WEEKDAY = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-var day = WEEKDAY[now.getDay()];
-var hours = now.getHours();
-var minutes = now.getMinutes();
+function timeStamp() {
+  let now = new Date();
+  let year = now.getFullYear();
+  let month = now.getMonth();
+  let date = now.getDate();
+  const WEEKDAY = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+  let day = WEEKDAY[now.getDay()];
+  let hours = now.getHours();
+  let minutes = ("0"+now.getMinutes()).slice(-2);
+
+  return year + '.' + (month+1) + '.' + date + '<br>' + '(' + day + ') ' + hours + ':' + minutes;
+}
 
 
-
-var timestamp = year + '.' + (month+1) + '.' + date + '<br>' + '(' + day + ') ' + hours + ':' + minutes;
 
 function addItem() {
     let item = document.querySelector(".item").value;
@@ -29,20 +33,20 @@ function addItem() {
         return false;
       }
         itemList.push(item);
+        storage.setItem(itemList.length, item);
         document.querySelector(".item").value = "";
         document.querySelector(".item").focus();
-        showList();
     }
 }
 
 function showList() {
+    let timestamp = timeStamp();
     let list = "<ul>"
     for (let i = 0; i <itemList.length; i++) {
         list += "<li>" + itemList[i] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + timestamp + "</div></li>";
     }
     list += "</ul>";
     document.querySelector(".item_list").innerHTML = list;
-
 
     let deleteButtons = document.querySelectorAll(".close");
     for (let i = 0; i < deleteButtons.length; i++) {
@@ -53,6 +57,16 @@ function showList() {
 
 function deleteItem() {
     let id = this.getAttribute("id");
+    storage.removeItem(id);
     itemList.splice(id, 1);
     showList();
+}
+
+window.onload = function() {
+  for(let i = 0, len = storage.length; i < len; i++){
+    let k = storage.key(i);
+    let v = storage[k];
+    itemList.push(v);
+  }
+  showList();
 }
