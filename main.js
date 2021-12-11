@@ -40,7 +40,7 @@ function addItem() {
 }
 
 function showList() {
-    let timestamp = timeStamp();
+    var timestamp = timeStamp();
     let list = "<ul>"
     for (let i = 0; i <itemList.length; i++) {
         list += "<li>" + itemList[i] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + timestamp + "</div></li>";
