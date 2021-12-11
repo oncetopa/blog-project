@@ -65,9 +65,8 @@ function deleteItem() {
 }
 
 window.onload = function() {
-  for(let i = 0, len = myStorage.length; i < len; i++){
-    let k = myStorage.key(i);
-    let v = JSON.parse(myStorage[k]);
+  for(let i = 0, i < myStorage.length; i++){
+    let v = JSON.parse(myStorage.getItem(i));
     itemList.push(v);
   }
   showList();
