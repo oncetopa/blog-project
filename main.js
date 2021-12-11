@@ -11,6 +11,10 @@ $(".input_section").keyup(function(event) {
 function addItem() {
     let item = document.querySelector(".item").value;
     if (item != null) {
+        if (item == ''){
+          alert('내용을 입력해주세요.\nInvalid input, try again.');
+          return false;
+        }
         itemList.push(item);
         document.querySelector(".item").value = "";
         document.querySelector(".item").focus();
