@@ -65,7 +65,6 @@ ul li {
   margin: 20px;
   background: #eee;
   font-size: 15px;
-  transition: 0.3s;
   max-width:800px;
 }
 
@@ -84,6 +83,11 @@ ul li {
   background: linear-gradient(135deg, #b993d6, #8ca6db);
   border-radius: 100%;
   color: white;
+}
+
+#timestamp {
+  font-style: italic;
+  text-align: right;
 }
 
 @media screen and (max-width: 768px) {
