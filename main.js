@@ -1,4 +1,4 @@
-// let storage = localStorage;
+let myStorage = window.localStorage;
 
 let itemList = [];
 let timeList = [];
@@ -32,7 +32,7 @@ function addItem() {
         return false;
       }
         itemList.push(item);
-        // storage.setItem((itemList.length)-1, item);
+        myStorage.setItem(itemList.length, JSON.stringify(item));
         document.querySelector(".item").value = "";
         document.querySelector(".item").focus();
         showList();
@@ -58,17 +58,17 @@ function showList() {
 
 function deleteItem() {
     let id = this.getAttribute("id");
-    // storage.removeItem(id);
+    myStorage.removeItem(id);
     itemList.splice(id, 1);
     timeList.splice(id, 1);
     showList();
 }
 
-// window.onload = function() {
-//   for(let i = 0, len = storage.length; i < len; i++){
-//     let k = storage.key(i);
-//     let v = storage[k];
-//     itemList.push(v);
-//   }
-//   showList();
-// }
+window.onload = function() {
+  for(let i = 0, len = myStorage.length; i < len; i++){
+    let k = myStorage.key(i);
+    let v = JSON.parse(myStorage[k]);
+    itemList.push(v);
+  }
+  showList();
+}
