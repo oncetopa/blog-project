@@ -64,10 +64,10 @@ function deleteItem() {
     showList();
 }
 
-window.onload = function() {
-  for(let i = 0, i < myStorage.length; i++){
-    let v = JSON.parse(myStorage.getItem(i));
-    itemList.push(v);
-  }
-  showList();
-}
+// window.onload = function() {
+//   for(let i = 0, i < myStorage.length; i++){
+//     let v = JSON.parse(myStorage.getItem(i));
+//     itemList.push(v);
+//   }
+//   showList();
+// }
