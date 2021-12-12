@@ -36,7 +36,6 @@ function addItem() {
         timeList.push(timestamp);
         let dataList = [item, timestamp];
         myStorage.setItem(String((itemList.length)-1), JSON.stringify(dataList));
-        myStorage.sort();
         document.querySelector(".item").value = "";
         document.querySelector(".item").focus();
         showList();
