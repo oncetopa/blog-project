@@ -1,7 +1,7 @@
 let myStorage = window.localStorage;
 
-let itemList = [];
-let timeList = [];
+let mainList = [];
+let itemtimeList = [];
 let inputButton = document.querySelector(".input_button");
 inputButton.addEventListener("click", addItem);
 
@@ -31,11 +31,11 @@ function addItem() {
         alert('내용을 입력해주세요.\nInvalid input, try again.');
         return false;
       }
-        itemList.push(item);
         var timestamp = timeStamp();
-        timeList.push(timestamp);
         let dataList = [item, timestamp];
-        myStorage.setItem(String((itemList.length)-1), JSON.stringify(dataList));
+        mainList.push(dataList);
+        var key = String((mainList.length)-1);
+        myStorage.setItem(key, JSON.stringify(dataList));
         document.querySelector(".item").value = "";
         document.querySelector(".item").focus();
         showList();
@@ -44,8 +44,8 @@ function addItem() {
 
 function showList() {
     let list = "<ul>"
-    for (let i = 0; i < itemList.length; i++) {
-        list += "<li>" + itemList[i] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + timeList[i] + "</div></li>";
+    for (let i = 0; i < mainList.length; i++) {
+        list += "<li>" + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div></li>";
     }
     list += "</ul>";
     document.querySelector(".item_list").innerHTML = list;
@@ -59,21 +59,32 @@ function showList() {
 
 function deleteItem() {
     let id = this.getAttribute("id");
-    itemList.splice(id, 1);
-    timeList.splice(id, 1);
-    myStorage.removeItem(String(id));
+    mainList.splice(id, 1);
+    let key = String(id);
+    myStorage.removeItem(key);
+    alert(key);
     showList();
 }
 
 function storageLoad() {
-  for (let i = 0; i < myStorage.length; i++) {
-    let key = String(i);
-    const tempList = JSON.parse(myStorage.getItem(key));
-    let item = tempList[0];
-    let time = tempList[1];
-    itemList.push(item);
-    timeList.push(time);
-  }
+    let wholeList = [];
+
+    for (let i = 0; i < myStorage.length; i++) {
+      let key = String(i);
+      const tempList = JSON.parse(myStorage.getItem(key));
+      wholeList.push(tempList);
+    }
+
+    wholeList.sort((a, b) => {
+      return a[0] - b[0]
+    });
+
+    for (let k = 0; k < wholeList.length; k++) {
+      let item = wholeList[k][0];
+      let time = wholeList[k][1];
+      let loadList = [item, time];
+      mainList.push(loadList);
+    }
 }
 
 window.onload = function() {
