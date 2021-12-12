@@ -62,12 +62,10 @@ function deleteItem() {
     itemList.splice(id, 1);
     timeList.splice(id, 1);
     myStorage.removeItem(String(id));
-    myStorage.sort();
     showList();
 }
 
 function storageLoad() {
-  myStorage.sort();
   for (let i = 0; i < myStorage.length; i++) {
     let key = String(i);
     const tempList = JSON.parse(myStorage.getItem(key));
