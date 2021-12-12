@@ -32,7 +32,7 @@ function addItem() {
         return false;
       }
         itemList.push(item);
-        myStorage.setItem((itemList.length)-1, JSON.stringify(item));
+        myStorage.setItem(String((itemList.length)-1), JSON.stringify(item));
         document.querySelector(".item").value = "";
         document.querySelector(".item").focus();
         showList();
@@ -60,13 +60,14 @@ function deleteItem() {
     let id = this.getAttribute("id");
     itemList.splice(id, 1);
     timeList.splice(id, 1);
-    myStorage.removeItem(id);
+    myStorage.removeItem(String(id));
     showList();
 }
 
 function storageLoad() {
   for (let i = 0; i < myStorage.length; i++) {
-    let v = JSON.parse(myStorage.getItem(i));
+    let key = String(i);
+    const v = JSON.parse(myStorage.getItem(key));
     itemList.push(v);
   }
 }
