@@ -32,7 +32,10 @@ function addItem() {
         return false;
       }
         itemList.push(item);
-        myStorage.setItem(String((itemList.length)-1), JSON.stringify(item));
+        var timestamp = timeStamp();
+        timeList.push(timestamp);
+        let dataList = [item, timestamp];
+        myStorage.setItem(String((itemList.length)-1), JSON.stringify(dataList));
         document.querySelector(".item").value = "";
         document.querySelector(".item").focus();
         showList();
@@ -40,8 +43,6 @@ function addItem() {
 }
 
 function showList() {
-    var timestamp = timeStamp();
-    timeList.push(timestamp);
     let list = "<ul>"
     for (let i = 0; i < itemList.length; i++) {
         list += "<li>" + itemList[i] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + timeList[i] + "</div></li>";
@@ -67,8 +68,11 @@ function deleteItem() {
 function storageLoad() {
   for (let i = 0; i < myStorage.length; i++) {
     let key = String(i);
-    const v = JSON.parse(myStorage.getItem(key));
-    itemList.push(v);
+    const tempList = JSON.parse(myStorage.getItem(key));
+    let item = tempList[0];
+    let time = tempList[1];
+    itemList.push(item);
+    timeList.push(time);
   }
 }
 
