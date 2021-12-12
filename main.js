@@ -36,6 +36,7 @@ function addItem() {
         timeList.push(timestamp);
         let dataList = [item, timestamp];
         myStorage.setItem(String((itemList.length)-1), JSON.stringify(dataList));
+        myStorage.sort();
         document.querySelector(".item").value = "";
         document.querySelector(".item").focus();
         showList();
@@ -62,10 +63,12 @@ function deleteItem() {
     itemList.splice(id, 1);
     timeList.splice(id, 1);
     myStorage.removeItem(String(id));
+    myStorage.sort();
     showList();
 }
 
 function storageLoad() {
+  myStorage.sort();
   for (let i = 0; i < myStorage.length; i++) {
     let key = String(i);
     const tempList = JSON.parse(myStorage.getItem(key));
