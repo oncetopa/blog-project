@@ -1,5 +1,8 @@
 let myStorage = window.localStorage;
 
+const BOARDLIST_LS = 'boardLists';
+const boardListsObj = [];
+
 let mainList = [];
 let itemtimeList = [];
 let inputButton = document.querySelector(".input_button");
