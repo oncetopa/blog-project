@@ -75,6 +75,10 @@ function storageLoad() {
       wholeList.push(tempList);
     }
 
+    // wholeList.sort((a, b) => {
+    //   return a[0] - b[0]
+    // });
+
     for (let k = 0; k < wholeList.length; k++) {
       let item = wholeList[k][0];
       let time = wholeList[k][1];
@@ -83,14 +87,19 @@ function storageLoad() {
     }
 }
 
-function sortTodoLatest() {
-  this.todoItems.sort(function(a,b) {
-    return b[1] - a[1];
-  });
+function SortLocalStorage(){
+  if(myStorage.length > 0){
+    var localStorageArray = new Array();
+    for (let i = 0; i < myStorage.length; i++){
+      localStorageArray[i] = myStorage.key(i)+myStorage.getItem(myStorage.key(i));
+    }
+  }
+  var sortedArray = localStorageArray.sort();
+  return sortedArray;
 }
 
 window.onload = function() {
   storageLoad();
-  sortTodoLatest();
+  myStorage = SortLocalStorage();
   showList();
 }
