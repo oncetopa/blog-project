@@ -87,7 +87,14 @@ function storageLoad() {
     }
 }
 
+function sortTodoLatest() {
+  this.todoItems.sort(function(a,b) {
+    return b[1] - a[1];
+  });
+}
+
 window.onload = function() {
   storageLoad();
+  sortTodoLatest();
   showList();
 }
