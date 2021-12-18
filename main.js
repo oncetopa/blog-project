@@ -62,7 +62,6 @@ function deleteItem() {
     mainList.splice(id, 1);
     let key = String(id);
     myStorage.removeItem(key);
-    alert(key);
     showList();
 }
 
