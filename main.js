@@ -66,27 +66,25 @@ function deleteItem() {
     showList();
 }
 
-function storageLoad(){
-  if(myStorage.length > 0){
-    var localStorageArray = new Array();
-    for (let i = 0; i < myStorage.length; i++){
-      localStorageArray[i] = myStorage.key(i)+myStorage.getItem(myStorage.key(i));
+function storageLoad() {
+    let wholeList = [];
+
+    for (let i = 0; i < myStorage.length; i++) {
+      let key = String(i);
+      const tempList = JSON.parse(myStorage.getItem(key));
+      wholeList.push(tempList);
     }
-  }
-  var sortedArray = localStorageArray.sort();
 
-  for (let k = 0; k < sortedArray.length; k++) {
-    let key = String(k);
-    const tempList = JSON.parse(sortedArray[k]);
-    wholeList.push(tempList);
-  }
+    wholeList.sort((a, b) => {
+      return a[0] - b[0]
+    });
 
-  for (let m = 0; m < wholeList.length; m++) {
-    let item = wholeList[m][0];
-    let time = wholeList[m][1];
-    let loadList = [item, time];
-    mainList.push(loadList);
-  }
+    for (let k = 0; k < wholeList.length; k++) {
+      let item = wholeList[k][0];
+      let time = wholeList[k][1];
+      let loadList = [item, time];
+      mainList.push(loadList);
+    }
 }
 
 window.onload = function() {
