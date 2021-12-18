@@ -93,12 +93,9 @@ function SortLocalStorage(){
     for (let i = 0; i < myStorage.length; i++){
       localStorageArray[i] = myStorage.key(i)+myStorage.getItem(myStorage.key(i));
     }
-    var sortedArray = localStorageArray.sort();
-    return sortedArray;
   }
-  else{
-    break;
-  }
+  var sortedArray = localStorageArray.sort();
+  return sortedArray;
 }
 
 window.onload = function() {
