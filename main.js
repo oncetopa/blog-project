@@ -75,10 +75,6 @@ function storageLoad() {
       wholeList.push(tempList);
     }
 
-    wholeList.sort((a, b) => {
-      return a[0] - b[0]
-    });
-
     for (let k = 0; k < wholeList.length; k++) {
       let item = wholeList[k][0];
       let time = wholeList[k][1];
