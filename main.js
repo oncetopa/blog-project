@@ -60,7 +60,7 @@ function showList() {
 function deleteItem() {
     let id = this.getAttribute("id");
     mainList.splice(id, 1);
-    let key = String(id);
+    let key = myStorage.key(String(id));
     myStorage.removeItem(key);
     showList();
 }
