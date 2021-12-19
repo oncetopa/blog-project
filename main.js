@@ -26,6 +26,11 @@ function timeStamp() {
 
 function addItem() {
     let item = document.querySelector(".item").value;
+
+    if(myStorage.getItem('data') == null){
+      myStorage.setItem('data', '[]');
+    }
+
     if (item != null) {
       if (item == ''){
         alert('내용을 입력해주세요.\nInvalid input, try again.');
@@ -33,9 +38,13 @@ function addItem() {
       }
         var timestamp = timeStamp();
         let dataList = [item, timestamp];
-        mainList.push(dataList);
-        var key = String((mainList.length)-1);
-        myStorage.setItem(key, JSON.stringify(dataList));
+
+        var old_data = JSON.parse(myStorage.getItem('data'));
+        old_data.push(dataList);
+        myStorage.setItem('data', JSON.stringify(old_data));
+        // mainList.push(dataList);
+        // var key = String((mainList.length)-1);
+        // myStorage.setItem(key, JSON.stringify(dataList));
         document.querySelector(".item").value = "";
         document.querySelector(".item").focus();
         showList();
@@ -60,26 +69,37 @@ function showList() {
 function deleteItem() {
     let id = this.getAttribute("id");
     mainList.splice(id, 1);
-    let key = myStorage.key(String(id));
-    myStorage.removeItem(key);
+    var current_data = JSON.parse(myStorage.getItem('data'));
+    current_data.splice(id, 1);
+    myStorage.setItem('data', JSON.stringify(current_data));
+    // let key = myStorage.key(String(id));
+    // myStorage.removeItem(key);
     showList();
 }
 
 function storageLoad() {
-    let wholeList = [];
+  if(myStorage.getItem('data') != null){
 
-    for (let i = 0; i < myStorage.length; i++) {
-      let key = String(i);
-      const tempList = JSON.parse(myStorage.getItem(key));
-      wholeList.push(tempList);
-    }
+    var temp_data = JSON.parse(myStorage.getItem('data'));
 
-    for (let k = 0; k < wholeList.length; k++) {
-      let item = wholeList[k][0];
-      let time = wholeList[k][1];
-      let loadList = [item, time];
-      mainList.push(loadList);
-    }
+    mainList.push(temp_data);
+
+    // let wholeList = [];
+    //
+    // for (let i = 0; i < myStorage.length; i++) {
+    //   let key = String(i);
+    //   const tempList = JSON.parse(myStorage.getItem(key));
+    //   wholeList.push(tempList);
+    // }
+    //
+    // for (let k = 0; k < wholeList.length; k++) {
+    //   let item = wholeList[k][0];
+    //   let time = wholeList[k][1];
+    //   let loadList = [item, time];
+    //   mainList.push(loadList);
+    // }
+
+  }
 }
 
 window.onload = function() {
