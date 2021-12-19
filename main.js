@@ -37,7 +37,7 @@ function addItem() {
       }
         var timestamp = timeStamp();
         let dataList = [item, timestamp];
-        if(myStorage.length == 0){
+        if(mainList == ''){
           mainList[0] = dataList;
         }
         else{
