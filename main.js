@@ -81,11 +81,8 @@ function storageLoad() {
   if(myStorage.getItem('data') != null){
     var raw_data = myStorage.getItem('data');
     var first_data = raw_data.replace(/[\[\]']+/g,'').replace(/\"/gi, '');
-    console.log(typeof(first_data));
     rawList = first_data.split(',');
-    console.log(typeof(rawList));
     for(let i = 0; i < rawList.length; i += 2) mainList.push(rawList.slice(i, i+2));
-    console.log(typeof(mainList));
   }
 }
 
