@@ -1,7 +1,6 @@
 let myStorage = window.localStorage;
 
 let mainList = [];
-let itemtimeList = [];
 let inputButton = document.querySelector(".input_button");
 inputButton.addEventListener("click", addItem);
 
@@ -38,13 +37,16 @@ function addItem() {
       }
         var timestamp = timeStamp();
         let dataList = [item, timestamp];
-
+        if(myStorage.length == 0){
+          mainList[0] = dataList;
+        }
+        else{
+          mainList.push(dataList);
+        }
+        let new_data = item + ',' + timestamp;
         var old_data = JSON.parse(myStorage.getItem('data'));
-        old_data.push(dataList);
+        old_data.push(new_data);
         myStorage.setItem('data', JSON.stringify(old_data));
-        // mainList.push(dataList);
-        // var key = String((mainList.length)-1);
-        // myStorage.setItem(key, JSON.stringify(dataList));
         document.querySelector(".item").value = "";
         document.querySelector(".item").focus();
         showList();
@@ -72,37 +74,25 @@ function deleteItem() {
     var current_data = JSON.parse(myStorage.getItem('data'));
     current_data.splice(id, 1);
     myStorage.setItem('data', JSON.stringify(current_data));
-    // let key = myStorage.key(String(id));
-    // myStorage.removeItem(key);
     showList();
 }
 
 function storageLoad() {
   if(myStorage.getItem('data') != null){
-
-    var temp_data = JSON.parse(myStorage.getItem('data'));
-
-    mainList.push(temp_data);
-
-    // let wholeList = [];
-    //
-    // for (let i = 0; i < myStorage.length; i++) {
-    //   let key = String(i);
-    //   const tempList = JSON.parse(myStorage.getItem(key));
-    //   wholeList.push(tempList);
-    // }
-    //
-    // for (let k = 0; k < wholeList.length; k++) {
-    //   let item = wholeList[k][0];
-    //   let time = wholeList[k][1];
-    //   let loadList = [item, time];
-    //   mainList.push(loadList);
-    // }
-
+    var raw_data = myStorage.getItem('data');
+    var first_data = raw_data.replace(/[\[\]']+/g,'').replace(/\"/gi, '');
+    console.log(typeof(first_data));
+    rawList = first_data.split(',');
+    console.log(typeof(rawList));
+    for(let i = 0; i < rawList.length; i += 2) mainList.push(rawList.slice(i, i+2));
+    console.log(typeof(mainList));
   }
 }
 
 window.onload = function() {
+
   storageLoad();
-  showList();
+  if(mainList != ''){
+    showList();
+  }
 }
