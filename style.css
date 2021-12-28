@@ -90,6 +90,23 @@ ul li {
   text-align: right;
 }
 
+.category_selection{
+  text-align: center;
+}
+
+.category_selection input[type=radio]{
+  display:none;
+}
+
+.category_selection input[type=radio] + label {
+  color: #e0e0e0;
+  font-size: 2em;
+}
+
+.category_selection input[type=radio]:checked + label {
+    color: #000;
+}
+
 @media screen and (max-width: 768px) {
   body {
     margin: 0;
