@@ -2,6 +2,7 @@ let myStorage = window.localStorage;
 
 let mainList = [];
 let inputButton = document.querySelector(".input_button");
+inputButton.addEventListener("click", getCategory);
 inputButton.addEventListener("click", addItem);
 
 $(".input_section").keyup(function(event) {
@@ -9,6 +10,18 @@ $(".input_section").keyup(function(event) {
         $(".input_button").click();
     }
 });
+
+var categoryVar = null;
+
+function getCategory() {
+  const categoryNodeList = document.getElementsByName('category');
+
+  categoryNodeList.forEach((node) => {
+    if(node.checked){
+      categoryVar = node.value;
+    }
+  });
+}
 
 function timeStamp() {
   var now = new Date();
@@ -36,14 +49,14 @@ function addItem() {
         return false;
       }
         var timestamp = timeStamp();
-        let dataList = [item, timestamp];
+        let dataList = [item, timestamp, categoryVar];
         if(mainList == ''){
           mainList[0] = dataList;
         }
         else{
           mainList.push(dataList);
         }
-        let new_data = item + ',' + timestamp;
+        let new_data = item + ',' + timestamp + ',' + categoryVar;
         var old_data = JSON.parse(myStorage.getItem('data'));
         old_data.push(new_data);
         myStorage.setItem('data', JSON.stringify(old_data));
@@ -56,7 +69,7 @@ function addItem() {
 function showList() {
     let list = "<ul>"
     for (let i = 0; i < mainList.length; i++) {
-        list += "<li>" + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div></li>";
+        list += "<li class=" + mainList[i][2] + '>' + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div></li>";
     }
     list += "</ul>";
     document.querySelector(".item_list").innerHTML = list;
@@ -82,7 +95,7 @@ function storageLoad() {
     var raw_data = myStorage.getItem('data');
     var first_data = raw_data.replace(/[\[\]']+/g,'').replace(/\"/gi, '');
     rawList = first_data.split(',');
-    for(let i = 0; i < rawList.length; i += 2) mainList.push(rawList.slice(i, i+2));
+    for(let i = 0; i < rawList.length; i += 3) mainList.push(rawList.slice(i, i+3));
   }
 }
 
