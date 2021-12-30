@@ -63,7 +63,7 @@ ul li {
   position: relative;
   padding: 12px 10px 12px 50px;
   margin: 20px;
-  background: #c4f4fe;
+  background: #F5F5F5;
   font-size: 15px;
   max-width:800px;
 }
@@ -105,6 +105,18 @@ ul li {
 
 .category_selection input[type=radio]:checked + label {
     color: #000;
+}
+
+li.still{
+  background: #c4f4fe;
+}
+
+li.sports{
+  background: #98FB98;
+}
+
+li.music{
+  background: #FFA07A;
 }
 
 @media screen and (max-width: 768px) {
