@@ -5,6 +5,9 @@ let inputButton = document.querySelector(".input_button");
 inputButton.addEventListener("click", getCategory);
 inputButton.addEventListener("click", addItem);
 
+let applyButton = document.querySelector(".apply_button");
+applyButton.addEventListener("click", getFilter);
+
 $(".input_section").keyup(function(event) {
     if (event.keyCode === 13) {
         $(".input_button").click();
@@ -12,7 +15,6 @@ $(".input_section").keyup(function(event) {
 });
 
 var categoryVar = null;
-
 function getCategory() {
   const categoryNodeList = document.getElementsByName('category');
 
@@ -21,6 +23,21 @@ function getCategory() {
       categoryVar = node.value;
     }
   });
+}
+
+var filterVar = JSON.parse(myStorage.getItem('filterdata'));
+function getFilter() {
+  const filterNodeList = document.getElementsByName('filter');
+
+  filterNodeList.forEach((node) => {
+    if(node.checked){
+      filterVar = node.value;
+    }
+  });
+
+  myStorage.setItem('filterdata', JSON.stringify(filterVar));
+
+  window.location.reload();
 }
 
 function timeStamp() {
@@ -70,22 +87,54 @@ function showList() {
     let list = "<ul>"
     let categoryList = ['♪', '✒', '☮'];
     for (let i = 0; i < mainList.length; i++) {
-        list += "<li class=" + mainList[i][2] + '>' + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div>";
+        if(filterVar == 'music'){
+          if(mainList[i][2] == 'music'){
+            list += "<li class=" + mainList[i][2] + '>' + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div>";
 
-        if(mainList[i][2] == 'music'){
-          list += "<div id='hashtag'>" + categoryList[0] + "</div>";
+            list += "<div id='hashtag'>" + categoryList[0] + "</div>";
+
+            list += "</li>";
+          }
         }
 
-        else if(mainList[i][2] == 'still'){
-          list += "<div id='hashtag'>" + categoryList[1] + "</div>";
+        else if(filterVar == 'still'){
+          if(mainList[i][2] == 'still'){
+            list += "<li class=" + mainList[i][2] + '>' + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div>";
+
+            list += "<div id='hashtag'>" + categoryList[1] + "</div>";
+
+            list += "</li>";
+          }
         }
 
-        else if(mainList[i][2] == 'sports'){
-          list += "<div id='hashtag'>" + categoryList[2] + "</div>";
+        else if(filterVar == 'sports'){
+          if(mainList[i][2] == 'sports'){
+            list += "<li class=" + mainList[i][2] + '>' + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div>";
+
+            list += "<div id='hashtag'>" + categoryList[2] + "</div>";
+
+            list += "</li>";
+          }
         }
 
-        list += "</li>";
-    }
+        else{
+          list += "<li class=" + mainList[i][2] + '>' + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div>";
+
+          if(mainList[i][2] == 'music'){
+            list += "<div id='hashtag'>" + categoryList[0] + "</div>";
+          }
+
+          else if(mainList[i][2] == 'still'){
+            list += "<div id='hashtag'>" + categoryList[1] + "</div>";
+          }
+
+          else if(mainList[i][2] == 'sports'){
+            list += "<div id='hashtag'>" + categoryList[2] + "</div>";
+          }
+
+          list += "</li>";
+        }
+      }
     list += "</ul>";
     document.querySelector(".item_list").innerHTML = list;
 
