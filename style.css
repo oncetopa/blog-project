@@ -85,6 +85,10 @@ ul li {
   color: white;
 }
 
+#hashtag {
+  text-align: right;
+}
+
 #timestamp {
   font-style: italic;
   text-align: right;
@@ -100,7 +104,7 @@ ul li {
 
 .category_selection input[type=radio] + label {
   color: #e0e0e0;
-  font-size: 2em;
+  font-size: 12pt;
 }
 
 .category_selection input[type=radio]:checked + label {
