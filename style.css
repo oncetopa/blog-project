@@ -111,6 +111,23 @@ ul li {
     color: #000;
 }
 
+.filter{
+  text-align: right;
+}
+
+.filter input[type=radio]{
+  display:none;
+}
+
+.filter input[type=radio] + label {
+  color: #e0e0e0;
+  font-size: 15pt;
+}
+
+.filter input[type=radio]:checked + label {
+    color: #000;
+}
+
 li.still{
   background: #c4f4fe;
 }
@@ -121,6 +138,10 @@ li.sports{
 
 li.music{
   background: #FFA07A;
+}
+
+.filter{
+  float: right;
 }
 
 @media screen and (max-width: 768px) {
