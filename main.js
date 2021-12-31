@@ -68,8 +68,23 @@ function addItem() {
 
 function showList() {
     let list = "<ul>"
+    let categoryList = ['♪', '✒', '☮'];
     for (let i = 0; i < mainList.length; i++) {
-        list += "<li class=" + mainList[i][2] + '>' + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div></li>";
+        list += "<li class=" + mainList[i][2] + '>' + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div>";
+
+        if(mainList[i][2] == 'music'){
+          list += "<div id='hashtag'>" + categoryList[0] + "</div>";
+        }
+
+        else if(mainList[i][2] == 'still'){
+          list += "<div id='hashtag'>" + categoryList[1] + "</div>";
+        }
+
+        else if(mainList[i][2] == 'sports'){
+          list += "<div id='hashtag'>" + categoryList[2] + "</div>";
+        }
+
+        list += "</li>";
     }
     list += "</ul>";
     document.querySelector(".item_list").innerHTML = list;
