@@ -181,6 +181,9 @@ li.music{
 @media screen and (min-width: 768px){
   .item_list{
     width: 700px;
-    margin: auto;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
   }
 }
