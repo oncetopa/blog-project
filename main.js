@@ -89,9 +89,13 @@ function showList() {
     for (let i = 0; i < mainList.length; i++) {
         if(filterVar == 'music'){
           if(mainList[i][2] == 'music'){
-            list += "<li class=" + mainList[i][2] + '>' + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div>";
+            list += "<li id='text" + i + "' class=" + mainList[i][2] + '>' + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div>";
 
             list += "<div id='hashtag'>" + categoryList[0] + "</div>";
+
+            list += "<div id='edit'> <button onclick='editItem(" + i + ")' class='edit-button'>edit</button>";
+
+            list += "<span id='edit-box" + i + "' role='aria-hidden' class='edit-box'> <form action='javascript:void(0);' method='post' id='save-edit" + i + "'> <input type='text' class='edit" + i + "'> <input type='submit' value='save'> <a onclick='CloseInput(" + i + ")' aria-label='close'> \u00D7 </a> </form> </span> </div>";
 
             list += "</li>";
           }
@@ -99,9 +103,13 @@ function showList() {
 
         else if(filterVar == 'still'){
           if(mainList[i][2] == 'still'){
-            list += "<li class=" + mainList[i][2] + '>' + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div>";
+            list += "<li id='text" + i + "' class=" + mainList[i][2] + '>' + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div>";
 
             list += "<div id='hashtag'>" + categoryList[1] + "</div>";
+
+            list += "<div id='edit'> <button onclick='editItem(" + i + ")' class='edit-button'>edit</button>";
+
+            list += "<span id='edit-box" + i + "' role='aria-hidden' class='edit-box'> <form action='javascript:void(0);' method='post' id='save-edit" + i + "'> <input type='text' class='edit" + i + "'> <input type='submit' value='save'> <a onclick='CloseInput(" + i + ")' aria-label='close'> \u00D7 </a> </form> </span> </div>";
 
             list += "</li>";
           }
@@ -109,16 +117,20 @@ function showList() {
 
         else if(filterVar == 'sports'){
           if(mainList[i][2] == 'sports'){
-            list += "<li class=" + mainList[i][2] + '>' + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div>";
+            list += "<li id='text" + i + "' class=" + mainList[i][2] + '>' + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div>";
 
             list += "<div id='hashtag'>" + categoryList[2] + "</div>";
+
+            list += "<div id='edit'> <button onclick='editItem(" + i + ")' class='edit-button'>edit</button>";
+
+            list += "<span id='edit-box" + i + "' role='aria-hidden' class='edit-box'> <form action='javascript:void(0);' method='post' id='save-edit" + i + "'> <input type='text' class='edit" + i + "'> <input type='submit' value='save'> <a onclick='CloseInput(" + i + ")' aria-label='close'> \u00D7 </a> </form> </span> </div>";
 
             list += "</li>";
           }
         }
 
         else{
-          list += "<li class=" + mainList[i][2] + '>' + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div>";
+          list += "<li id='text" + i + "' class=" + mainList[i][2] + '>' + mainList[i][0] + "<span class='close' id=" + i + ">" + "\u00D7" + "</span>" + "<br><br>" + "<div id='timestamp'>" + mainList[i][1] + "</div>";
 
           if(mainList[i][2] == 'music'){
             list += "<div id='hashtag'>" + categoryList[0] + "</div>";
@@ -131,6 +143,10 @@ function showList() {
           else if(mainList[i][2] == 'sports'){
             list += "<div id='hashtag'>" + categoryList[2] + "</div>";
           }
+
+          list += "<div id='edit'> <button onclick='editItem(" + i + ")' class='edit-button'>edit</button>";
+
+          list += "<span id='edit-box" + i + "' role='aria-hidden' class='edit-box'> <form action='javascript:void(0);' method='post' id='save-edit" + i + "'> <input type='text' class='edit" + i + "'> <input type='submit' value='save'> <a onclick='CloseInput(" + i + ")' aria-label='close'> \u00D7 </a> </form> </span> </div>";
 
           list += "</li>";
         }
@@ -152,6 +168,31 @@ function deleteItem() {
     current_data.splice(id, 1);
     myStorage.setItem('data', JSON.stringify(current_data));
     showList();
+}
+
+function CloseInput(index) {
+  var realId = 'edit-box';
+  realId += index;
+  document.getElementById(realId).style.display = 'none';
+}
+
+function editItem(index) {
+  var forBlock = 'edit-box';
+  forBlock += index;
+  document.getElementById(forBlock).style.display = 'block';
+
+  var forText = 'save-edit';
+  forText += index;
+  document.getElementById(forText).onsubmit = function(){
+    var forValue = '.edit';
+    forValue += index;
+    let editValue = document.querySelector(forValue).value;
+    if(editValue != ''){
+      mainList[index][0] = editValue;
+    }
+    CloseInput(index);
+    showList();
+  }
 }
 
 function storageLoad() {
