@@ -148,6 +148,13 @@ li.music{
   margin-top: 40px;
 }
 
+.edit-box{
+  display: none;
+  max-width: 80%;
+  margin: auto;
+  margin-top: 10px;
+}
+
 @media screen and (max-width: 768px) {
   body {
     margin: 0;
@@ -181,6 +188,13 @@ li.music{
     background: rgba(255, 255, 255, 0);
   }
 }
+
+  .edit-box{
+    display: none;
+    max-width: 80%;
+    margin: auto;
+    margin-top: 10px;
+  }
 
 @media screen and (min-width: 768px){
   .item_list{
