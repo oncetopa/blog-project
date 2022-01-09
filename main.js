@@ -95,7 +95,7 @@ function showList() {
 
             list += "<div id='edit'> <button onclick='editItem(" + i + ")' class='edit-button'>edit</button>";
 
-            list += "<span id='edit-box" + i + "' role='aria-hidden' class='edit-box'> <form action='javascript:void(0);' method='post' id='save-edit" + i + "'> <input type='text' class='edit" + i + "'> <input type='submit' value='save'> <a onclick='CloseInput(" + i + ")' aria-label='close'> \u00D7 </a> </form> </span> </div>";
+            list += "<span id='edit-box" + i + "' role='aria-hidden' class='edit-box'> <form action='javascript:void(0);' method='post' id='save-edit" + i + "'> <input type='text' class='edit" + i + "' id='edit-page'> <input type='submit' value='save' class='save-button'> <a onclick='CloseInput(" + i + ")' aria-label='close'> \u00D7 </a> </form> </span> </div>";
 
             list += "</li>";
           }
@@ -109,7 +109,7 @@ function showList() {
 
             list += "<div id='edit'> <button onclick='editItem(" + i + ")' class='edit-button'>edit</button>";
 
-            list += "<span id='edit-box" + i + "' role='aria-hidden' class='edit-box'> <form action='javascript:void(0);' method='post' id='save-edit" + i + "'> <input type='text' class='edit" + i + "'> <input type='submit' value='save'> <a onclick='CloseInput(" + i + ")' aria-label='close'> \u00D7 </a> </form> </span> </div>";
+            list += "<span id='edit-box" + i + "' role='aria-hidden' class='edit-box'> <form action='javascript:void(0);' method='post' id='save-edit" + i + "'> <input type='text' class='edit" + i + "' id='edit-page'> <input type='submit' value='save' class='save-button'> <a onclick='CloseInput(" + i + ")' aria-label='close'> \u00D7 </a> </form> </span> </div>";
 
             list += "</li>";
           }
@@ -123,7 +123,7 @@ function showList() {
 
             list += "<div id='edit'> <button onclick='editItem(" + i + ")' class='edit-button'>edit</button>";
 
-            list += "<span id='edit-box" + i + "' role='aria-hidden' class='edit-box'> <form action='javascript:void(0);' method='post' id='save-edit" + i + "'> <input type='text' class='edit" + i + "'> <input type='submit' value='save'> <a onclick='CloseInput(" + i + ")' aria-label='close'> \u00D7 </a> </form> </span> </div>";
+            list += "<span id='edit-box" + i + "' role='aria-hidden' class='edit-box'> <form action='javascript:void(0);' method='post' id='save-edit" + i + "'> <input type='text' class='edit" + i + "' id='edit-page'> <input type='submit' value='save' class='save-button'> <a onclick='CloseInput(" + i + ")' aria-label='close'> \u00D7 </a> </form> </span> </div>";
 
             list += "</li>";
           }
@@ -146,7 +146,7 @@ function showList() {
 
           list += "<div id='edit'> <button onclick='editItem(" + i + ")' class='edit-button'>edit</button>";
 
-          list += "<span id='edit-box" + i + "' role='aria-hidden' class='edit-box'> <form action='javascript:void(0);' method='post' id='save-edit" + i + "'> <input type='text' class='edit" + i + "'> <input type='submit' value='save'> <a onclick='CloseInput(" + i + ")' aria-label='close'> \u00D7 </a> </form> </span> </div>";
+          list += "<span id='edit-box" + i + "' role='aria-hidden' class='edit-box'> <form action='javascript:void(0);' method='post' id='save-edit" + i + "'> <input type='text' class='edit" + i + "' id='edit-page'> <input type='submit' value='save' class='save-button'> <a onclick='CloseInput(" + i + ")' aria-label='close'> \u00D7 </a> </form> </span> </div>";
 
           list += "</li>";
         }
@@ -189,8 +189,23 @@ function editItem(index) {
     let editValue = document.querySelector(forValue).value;
     if(editValue != ''){
       mainList[index][0] = editValue;
+
+      var edit_timestamp = timeStamp();
+      edit_timestamp += "<br> <span class='edited-mark'>Edited</span>";
+      mainList[index][1] = edit_timestamp;
     }
     CloseInput(index);
+
+    myStorage.clear();
+    myStorage.setItem('data', '[]');
+
+    for (let i = 0; i < mainList.length; i++){
+      let edit_data = mainList[i][0] + ',' + mainList[i][1] + ',' + mainList[i][2];
+      var old_data = JSON.parse(myStorage.getItem('data'));
+      old_data.push(edit_data);
+      myStorage.setItem('data', JSON.stringify(old_data));
+    }
+
     showList();
   }
 }
