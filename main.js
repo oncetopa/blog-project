@@ -73,7 +73,7 @@ function addItem() {
         else{
           mainList.push(dataList);
         }
-        let new_data = item + '/' + timestamp + '/' + categoryVar;
+        let new_data = item + ',' + timestamp + ',' + categoryVar;
         var old_data = JSON.parse(myStorage.getItem('data'));
         old_data.push(new_data);
         myStorage.setItem('data', JSON.stringify(old_data));
@@ -200,7 +200,7 @@ function editItem(index) {
     myStorage.setItem('data', '[]');
 
     for (let i = 0; i < mainList.length; i++){
-      let edit_data = mainList[i][0] + '/' + mainList[i][1] + '/' + mainList[i][2];
+      let edit_data = mainList[i][0] + ',' + mainList[i][1] + ',' + mainList[i][2];
       var old_data = JSON.parse(myStorage.getItem('data'));
       old_data.push(edit_data);
       myStorage.setItem('data', JSON.stringify(old_data));
@@ -214,7 +214,7 @@ function storageLoad() {
   if(myStorage.getItem('data') != null){
     var raw_data = myStorage.getItem('data');
     var first_data = raw_data.replace(/[\[\]']+/g,'').replace(/\"/gi, '');
-    rawList = first_data.split('/');
+    rawList = first_data.split(',');
     for(let i = 0; i < rawList.length; i += 3) mainList.push(rawList.slice(i, i+3));
   }
 }
